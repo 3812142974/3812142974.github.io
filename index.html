@@ -37,11 +37,17 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .count-info { font-size: 12px; color: #999; margin-bottom: 8px; }
 
 .meme-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e8; table-layout: fixed; }
-.meme-table td { padding: 8px 6px; border: 1px solid #f0f0f0; cursor: pointer; text-align: center; word-break: break-all; transition: background .15s; vertical-align: middle; }
-.meme-table td:hover { background: #f5f3ff; }
-.meme-table td.active { background: #7c3aed; color: #fff; font-weight: 700; }
+.meme-table td { padding: 8px 6px; border: 1px solid #f0f0f0; cursor: pointer; text-align: center; word-break: break-all; transition: background .2s, color .2s; vertical-align: middle; }
+.meme-table td::selection { background: transparent; }
+/* 点击选中 */
+.meme-table td.active { background: #7c3aed !important; color: #fff; font-weight: 700; }
+/* hover 中心 */
+.meme-table td.hl { background: #7c3aed !important; color: #fff; font-weight: 700; }
+/* hover 渐变层1 - 最近邻 */
+.meme-table td.hl-n1 { background: #c4b5fd; }
+/* hover 渐变层2 - 稍远 */
+.meme-table td.hl-n2 { background: #ede9fe; }
 
-/* 图片弹窗 */
 .img-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.6); z-index: 200; display: none; justify-content: center; align-items: center; }
 .img-overlay.active { display: flex; }
 .img-modal { background: #fff; border-radius: 16px; padding: 20px; max-width: 90vw; max-height: 90vh; overflow: auto; text-align: center; animation: popIn .25s ease; position: relative; }
@@ -50,7 +56,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .img-modal img { max-width: 100%; max-height: 70vh; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.1); }
 .img-modal .img-name { font-size: 13px; color: #666; margin-top: 10px; }
 
-/* 通用弹窗 */
 .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.45); z-index: 100; display: none; justify-content: center; align-items: center; }
 .overlay.active { display: flex; }
 .detail { background: #fff; border-radius: 16px; width: 90%; max-width: 520px; max-height: 80vh; overflow-y: auto; animation: popIn .25s ease; }
@@ -98,7 +103,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
   <table class="meme-table" id="memeTable"><tbody id="tableBody"></tbody></table>
 </div>
 
-<!-- 图片弹窗 -->
 <div class="img-overlay" id="imgOverlay">
   <div class="img-modal">
     <button class="close-btn" id="imgClose">&times;</button>
@@ -107,7 +111,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
   </div>
 </div>
 
-<!-- 通用弹窗 -->
 <div class="overlay" id="overlay">
   <div class="detail" id="detail">
     <div class="detail-header">
@@ -258,7 +261,44 @@ function showImg(file) {
 
 function closeImg() {
   imgOverlay.classList.remove('active');
+  // 清除所有 active 状态
+  tableBody.querySelectorAll('td').forEach(t => t.classList.remove('active'));
 }
+
+// hover 渐变效果
+function clearHover() {
+  tableBody.querySelectorAll('td.hl, td.hl-n1, td.hl-n2').forEach(t => {
+    t.classList.remove('hl', 'hl-n1', 'hl-n2');
+  });
+}
+
+function applyHover(td) {
+  clearHover();
+  if (!td || !td.dataset.file) return;
+  const tr = td.parentElement;
+  const row = Array.from(tableBody.rows).indexOf(tr);
+  const col = Array.from(tr.cells).indexOf(td);
+  td.classList.add('hl');
+  // 给周围格子加渐变层
+  const rows = tableBody.rows;
+  const dist = (r, c) => Math.abs(r - row) + Math.abs(c - col);
+  for (let r = 0; r < rows.length; r++) {
+    for (let c = 0; c < COLS; c++) {
+      const cell = rows[r].cells[c];
+      if (!cell || !cell.dataset.file) continue;
+      const d = dist(r, c);
+      if (d === 1) cell.classList.add('hl-n1');
+      else if (d === 2) cell.classList.add('hl-n2');
+    }
+  }
+}
+
+tableBody.addEventListener('mouseover', e => {
+  const td = e.target.closest('td');
+  if (td && td.dataset.file) applyHover(td);
+});
+
+tableBody.addEventListener('mouseleave', () => clearHover());
 
 renderCards();
 
@@ -274,6 +314,7 @@ grid.addEventListener('click', e => {
 document.getElementById('pluginBack').addEventListener('click', () => {
   grid.style.display = '';
   pluginView.classList.remove('active');
+  clearHover();
 });
 
 overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('active'); });
