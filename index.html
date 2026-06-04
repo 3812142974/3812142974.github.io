@@ -48,6 +48,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 /* hover 渐变层2 - 稍远 */
 .meme-table td.hl-n2 { background: #ede9fe; }
 
+.cmd-table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e8; }
+.cmd-table td { padding: 10px 14px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+.cmd-table tr:last-child td { border-bottom: none; }
+.cmd-table td.cmd-name { width: 180px; font-weight: 600; color: #333; font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; word-break: break-all; background: #fafafa; border-right: 1px solid #f0f0f0; }
+.cmd-table td.cmd-desc { color: #666; line-height: 1.6; }
+.cmd-table tr:hover td { background: #f8f9ff; }
+.cmd-table tr:hover td.cmd-name { background: #ede9fe; }
+
 .img-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.6); z-index: 200; display: none; justify-content: center; align-items: center; }
 .img-overlay.active { display: flex; }
 .img-modal { background: #fff; border-radius: 16px; padding: 20px; max-width: 90vw; max-height: 90vh; overflow: auto; text-align: center; animation: popIn .25s ease; position: relative; }
@@ -130,59 +138,59 @@ const memeItems = [{"display": "30亿error,三十亿报错", "file": "30亿error
 
 const plugins = [
   { id: 1, name: '表情包生成器', brief: '输入指令触发表情包生成，@某人就可以是@的人的头像', tags: ['插件', '搞笑'], hasTable: true },
-  { id: 2, name: '插件 02', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 3, name: '插件 03', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 4, name: '插件 04', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 5, name: '插件 05', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 6, name: '插件 06', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 7, name: '插件 07', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 8, name: '插件 08', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 9, name: '插件 09', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 10, name: '插件 10', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 11, name: '插件 11', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 12, name: '插件 12', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 13, name: '插件 13', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 14, name: '插件 14', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 15, name: '插件 15', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 16, name: '插件 16', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 17, name: '插件 17', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 18, name: '插件 18', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 19, name: '插件 19', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 20, name: '插件 20', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 21, name: '插件 21', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 22, name: '插件 22', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 23, name: '插件 23', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 24, name: '插件 24', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 25, name: '插件 25', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 26, name: '插件 26', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 27, name: '插件 27', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 28, name: '插件 28', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 29, name: '插件 29', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 30, name: '插件 30', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 31, name: '插件 31', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 32, name: '插件 32', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 33, name: '插件 33', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 34, name: '插件 34', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 35, name: '插件 35', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 36, name: '插件 36', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 37, name: '插件 37', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 38, name: '插件 38', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 39, name: '插件 39', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 40, name: '插件 40', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 41, name: '插件 41', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 42, name: '插件 42', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 43, name: '插件 43', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 44, name: '插件 44', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 45, name: '插件 45', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 46, name: '插件 46', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 47, name: '插件 47', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 48, name: '插件 48', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 49, name: '插件 49', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 50, name: '插件 50', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 51, name: '插件 51', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 52, name: '插件 52', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 53, name: '插件 53', brief: '待补充简介内容', tags: ['插件'] },
-  { id: 54, name: '插件 54', brief: '待补充简介内容', tags: ['插件'] }
+  { id: 2, name: 'API 网页截图😝', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "截图", "desc": "基于外部 API 提供网页截图功能 用法：/ 截图 <url> [format=<format>] [width=<width>] [height=<height>] 参数说明： url：要截图的网站 URL（必需） format：图片格式，支持 png（默认）和 webp width：视窗宽度，范围 100-3840（默认 1920） height：视窗高度，范围 100-2160（默认 1080）"}] },
+  { id: 3, name: 'Builtin Commands Extension', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "del", "desc": "删除当前对话"}, {"name": "deop", "desc": "取消授权管理员。deop <admin_id>"}, {"name": "groupnew", "desc": "创建新群聊对话"}, {"name": "history", "desc": "查看对话记录"}, {"name": "llm", "desc": "开启 / 关闭 LLM"}, {"name": "ls", "desc": "查看对话列表"}, {"name": "model", "desc": "查看或者切换模型"}, {"name": "op", "desc": "授权管理员。op <admin_id>"}, {"name": "persona", "desc": "查看或者切换 Persona"}, {"name": "rename", "desc": "重命名对话"}, {"name": "switch", "desc": "通过 /ls 前面的序号切换对话"}] },
+  { id: 4, name: 'Epic 免费游戏推送', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "epic", "desc": "查询当前 Epic 免费游戏"}] },
+  { id: 5, name: 'Group Welcome (入群欢迎插件)', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "welcome ai", "desc": "-"}, {"name": "welcome bl", "desc": "-"}, {"name": "welcome count", "desc": "-"}, {"name": "welcome rules", "desc": "-"}, {"name": "welcome set", "desc": "设置欢迎语。"}, {"name": "welcome status", "desc": "-"}, {"name": "welcome wl", "desc": "-"}] },
+  { id: 6, name: 'QQ 空间 Ultra', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "写说说", "desc": "-"}, {"name": "删说说", "desc": "-"}, {"name": "匿名投稿", "desc": "-"}, {"name": "发说说", "desc": "-"}, {"name": "回评", "desc": "-"}, {"name": "投稿", "desc": "-"}, {"name": "拒稿", "desc": "-"}, {"name": "撤稿", "desc": "-"}, {"name": "查看访客", "desc": "-"}, {"name": "看稿", "desc": "-"}, {"name": "看说说", "desc": "-"}, {"name": "评说说", "desc": "-"}, {"name": "读说说", "desc": "-"}, {"name": "赞说说", "desc": "-"}, {"name": "过稿", "desc": "-"}] },
+  { id: 7, name: 'Sekai Stickers', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "pjsk", "desc": "生成 Project Sekai 表情包"}, {"name": "pjsk 列表", "desc": "查看 PJSK 表情列表"}] },
+  { id: 8, name: 'UApiPro 工具箱', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "u bili", "desc": "B 站 UP 主信息"}, {"name": "u epic", "desc": "Epic 本周免费游戏"}, {"name": "u github", "desc": "GitHub 仓库信息"}, {"name": "u icp", "desc": "ICP 备案查询"}, {"name": "u ip", "desc": "IP 归属地查询"}, {"name": "u mc", "desc": "MC 服务器状态"}, {"name": "u mc 玩家", "desc": "MC 正版玩家信息"}, {"name": "u steam", "desc": "Steam 用户信息"}, {"name": "u whois", "desc": "域名 WHOIS 查询"}, {"name": "u 一言", "desc": "随机一句话"}, {"name": "u 万年历", "desc": "节假日 / 日历查询"}, {"name": "u 二维码", "desc": "生成二维码"}, {"name": "u 天气", "desc": "查询城市天气"}, {"name": "u 帮助", "desc": "查看所有指令"}, {"name": "u 必应", "desc": "必应每日壁纸"}, {"name": "u 快递", "desc": "快递物流查询"}, {"name": "u 新闻", "desc": "每日新闻早报"}, {"name": "u 答案之书", "desc": "随机答案"}, {"name": "u 随机", "desc": "生成随机字符串"}, {"name": "u 随机图片", "desc": "随机壁纸"}] },
+  { id: 9, name: 'astrbot_plugin_SteamSaleTracker', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "delsteamrmd", "desc": "删除游戏监控，不再提醒"}, {"name": "steamrmd", "desc": "创建游戏监控。 若游戏价格变动则提醒，群组订阅在群内提醒，个人订阅私聊提醒。"}, {"name": "steamrmdhelp", "desc": "显示帮助信息"}, {"name": "steamrmdlist", "desc": "查看当前用户或群组已订阅游戏列表"}, {"name": "steamrmdlistall", "desc": "供管理员使用，输出 Steam 全局订阅列表，包括游戏名和所有订阅者。"}, {"name": "steamrmdrefresh", "desc": "手动检查已订阅的游戏价格是否变动"}] },
+  { id: 10, name: 'astrbot_plugin_TurtleSoup', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "admin end turtle", "desc": "管理员命令：立即强制结束所有在线的海龟汤游戏。"}, {"name": "公布答案", "desc": "命令：在游戏中提前查看答案。"}, {"name": "开始海龟汤", "desc": "开始一局海龟汤游戏。 用法：/ 开始海龟汤 [题号]"}, {"name": "强制结束海龟汤", "desc": "命令：强制结束当前用户的海龟汤游戏。"}, {"name": "换一题", "desc": "命令：在游戏中更换题目。"}, {"name": "海龟汤帮助", "desc": "显示海龟汤推理游戏插件的所有可用命令。"}, {"name": "海龟汤提问", "desc": "命令：在游戏中提问。用法：/ 海龟汤提问 你的问题"}, {"name": "结束海龟汤", "desc": "命令：结束当前用户的海龟汤游戏。"}, {"name": "题库列表", "desc": "显示题库中所有可用的题目列表。 用法：/ 题库列表 [页数]"}, {"name": "题目详情", "desc": "显示指定题目的详细信息（不含答案）。 用法：/ 题目详情 题号"}] },
+  { id: 11, name: 'astrbot_plugin_blessingholidays', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "blessings check", "desc": "[管理员指令] 检查今天的日期状态。"}, {"name": "blessings manual", "desc": "[管理员指令] 手动触发一次祝福生成和发送流程（仅用于测试）。 该指令不再受节假日限制，可随时用于测试。"}, {"name": "blessings reload", "desc": "[管理员指令] 重新加载节假日数据。"}, {"name": "blessings test", "desc": "[管理员指令] 测试向指定群组和个人发送祝福。 Args: holiday_name (str, optional): 要测试的节日名称。默认为 \"手动测试\"。"}] },
+  { id: 12, name: 'astrbot_plugin_chatmaster', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "聊天检测", "desc": "-"}, {"name": "重置检测", "desc": "-"}] },
+  { id: 13, name: 'astrbot_plugin_content_info', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "context", "desc": "使用 /context 指令获取当前上下文统计"}, {"name": "context_limit", "desc": "手动覆盖配置，支持绑定模型名: /context_limit 128000 kimi-k2.5"}] },
+  { id: 14, name: 'astrbot_plugin_cook', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "吃点啥", "desc": "随机推荐菜品 - 可指定分类，如：/ 吃点啥 主食"}, {"name": "怎么做", "desc": "获取菜品制作方法 - 如：/ 怎么做 手工水饺"}, {"name": "菜谱分类", "desc": "查看所有菜品分类"}, {"name": "菜谱搜索", "desc": "搜索菜品 - 根据关键词搜索，如：/ 菜谱搜索 鸡"}, {"name": "重载食谱", "desc": "重新加载食谱数据 - 管理员功能"}, {"name": "随机推荐", "desc": "随机推荐菜品 - 可指定数量，如：/ 随机推荐 5"}, {"name": "食谱帮助", "desc": "显示详细帮助信息"}, {"name": "食谱统计", "desc": "显示插件统计信息 - 管理员功能"}] },
+  { id: 15, name: 'astrbot_plugin_gengtu', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "answer", "desc": "校验用户答案。 用法：/ 答案 你的答案"}, {"name": "gengtu", "desc": "获取梗图题目并发送图片。 用法：/ 梗图 或 /gengtu"}, {"name": "help_gengtu", "desc": "显示梗图抽象猜词插件帮助信息"}, {"name": "hint", "desc": "显示当前题目的正确答案。 用法：/ 提示 或 /hint"}] },
+  { id: 16, name: 'astrbot_plugin_help', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "helps", "desc": "获取插件帮助信息"}] },
+  { id: 17, name: 'astrbot_plugin_img-sysinfo', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "sysinfo", "desc": "-"}, {"name": "sysinfo_auto", "desc": "-"}, {"name": "sysinfo_conf", "desc": "-"}, {"name": "sysinfo_disks", "desc": "-"}] },
+  { id: 18, name: 'astrbot_plugin_model_connectivity', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "modelskiprefresh", "desc": "刷新跳过模型的 WebUI 候选项。"}, {"name": "modelstatus", "desc": "发送最近一次模型连通性状态图，不触发新的检测。"}, {"name": "modelstatusoff", "desc": "取消当前会话的定时状态图推送。"}, {"name": "modeltest", "desc": "检测 WebUI 已打开模型的连通性。"}, {"name": "刷新模型候选", "desc": "刷新跳过模型的 WebUI 候选项。"}, {"name": "取消模型状态推送", "desc": "取消当前会话的定时状态图推送。"}, {"name": "模型状态", "desc": "发送最近一次模型连通性状态图，不触发新的检测。"}, {"name": "模型连通性", "desc": "检测 WebUI 已打开模型的连通性。"}] },
+  { id: 19, name: 'astrbot_plugin_qrcode', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "qr", "desc": "将链接转换为二维码，使用方式：/qr <链接>"}, {"name": "qr_decode", "desc": "解析用户发送的二维码图片，使用方式：/qr_decode [图片]"}] },
+  { id: 20, name: 'astrbot_plugin_sky', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "光翼查询", "desc": "查询光翼信息"}, {"name": "光翼统计", "desc": "获取全图光翼统计"}, {"name": "光遇 ID 列表", "desc": "列出所有绑定的光遇 ID"}, {"name": "光遇切换", "desc": "切换当前光遇 ID"}, {"name": "光遇删除", "desc": "删除绑定的光遇 ID"}, {"name": "光遇状态", "desc": "获取光遇服务器状态"}, {"name": "光遇绑定", "desc": "绑定光遇 ID"}, {"name": "光遇菜单", "desc": "光遇菜单"}, {"name": "免费魔法", "desc": "获取免费魔法图片"}, {"name": "复刻先祖", "desc": "获取复刻先祖信息"}, {"name": "大蜡烛", "desc": "获取大蜡烛位置图片"}, {"name": "季节蜡烛", "desc": "获取季节蜡烛位置图片"}, {"name": "季节进度", "desc": "获取季节进度信息"}, {"name": "每日任务", "desc": "获取每日任务图片"}, {"name": "测试推送", "desc": "测试推送功能 - 手动触发碎石和老奶奶提醒"}, {"name": "献祭信息", "desc": "获取献祭信息"}, {"name": "碎石信息", "desc": "获取今日碎石信息"}, {"name": "碎石日历", "desc": "获取整月碎石日历 用法：碎石日历 [月份] 示例：碎石日历 或 碎石日历 3"}, {"name": "绑定身高", "desc": "绑定身高查询信息 用法：绑定身高 <备注> < 光遇长 ID> < 好友码 > 示例：绑定身高 大号 ABCD-1234-EFGH-5678 123456789"}, {"name": "老奶奶时间", "desc": "获取老奶奶用餐时间"}, {"name": "身高列表", "desc": "列出所有绑定的身高账号"}, {"name": "身高查询", "desc": "查询身高 用法：身高查询 [备注] 示例：身高查询 大号 如果不指定备注，则查询第一个绑定的账号"}, {"name": "身高解绑", "desc": "解除身高信息绑定 用法：身高解绑 [备注] 如果不指定备注，则解绑所有账号"}] },
+  { id: 21, name: 'astrbot_plugin_sudoku', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "数独", "desc": "-"}] },
+  { id: 22, name: 'astrbot_plugin_temp-email', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "查看正文", "desc": "获取邮件详情"}, {"name": "获取邮箱", "desc": "生成临时邮箱地址"}, {"name": "邮箱列表", "desc": "获取指定邮箱的邮件列表"}, {"name": "邮箱帮助", "desc": "显示插件帮助信息"}] },
+  { id: 23, name: 'astrbot_plugin_transport', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "chezhan", "desc": "查询车站列车信息 用法: / 车站 站名 例如: / 车站 杭州东站"}, {"name": "ditie", "desc": "查询地铁换乘路线 用法: / 地铁 城市 起点 终点 例如: / 地铁 杭州 萧山国际机场 龙翔桥"}, {"name": "help_chezhan", "desc": "显示车站查询帮助信息"}, {"name": "help_ditie", "desc": "显示地铁查询插件帮助信息"}, {"name": "help_jipiao", "desc": "显示机票查询帮助信息"}, {"name": "jipiao", "desc": "查询最低机票信息 用法: / 机票 出发地 目的地 例如: / 机票 北京 上海"}] },
+  { id: 24, name: '闭嘴', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "永久闭嘴", "desc": "让机器人永久闭嘴，直到使用说话指令解除。"}, {"name": "说话", "desc": "解除当前会话的闭嘴状态。"}, {"name": "醒醒", "desc": "在睡眠时段内临时唤醒机器人。"}, {"name": "闭嘴", "desc": "让机器人在当前会话中闭嘴一段时间。"}] },
+  { id: 25, name: '插件菜单 (typst 实现)', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "allhelps", "desc": "显示指令菜单"}, {"name": "events", "desc": "显示事件监听列表"}, {"name": "filters", "desc": "显示过滤器详情"}] },
+  { id: 26, name: '插件生成器', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "同意生成", "desc": "同意插件生成指令 Args: feedback (string): 可选的修改反馈"}, {"name": "密码转 md5", "desc": "将明文密码转换为 MD5 加密密码 Args: password (string): 明文密码"}, {"name": "拒绝生成", "desc": "拒绝插件生成指令 Args: 无参数"}, {"name": "挂起任务", "desc": "查看所有挂起的插件生成任务"}, {"name": "插件内容修改", "desc": "选择性修改插件内容指令 通过完整消息解析，支持空格。 用法：/ 插件内容修改 修改内容 [配置文件 | 文档 | 元数据 | 全部] 如果未指定类型，默认为 “全部”。"}, {"name": "插件生成状态", "desc": "查看插件生成器状态"}, {"name": "放弃挂起", "desc": "放弃指定的挂起任务 用法：/ 放弃挂起 插件名"}, {"name": "生成插件", "desc": "生成 AstrBot 插件指令 使用完整消息解析，支持空格"}, {"name": "继续生成", "desc": "恢复挂起的插件生成任务 用法： / 继续生成 - 自动恢复唯一挂起任务，或列出多个供选择 / 继续生成 插件名 - 恢复指定插件名的挂起任务"}] },
+  { id: 27, name: '赤石小助手', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "来依托", "desc": "-"}] },
+  { id: 28, name: '重启插件', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "定时重启", "desc": "定时重启 开 / 关"}, {"name": "重启", "desc": "重启 Astrbot"}, {"name": "重载", "desc": "重载 <插件名 | 序号 | 空 | all>"}] },
+  { id: 29, name: '抽群友', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "抽取", "desc": "-"}] },
+  { id: 30, name: '初叶🍂MetingAPI 点歌', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "切换 QQ 音乐", "desc": "切换当前会话的音源为 QQ 音乐"}, {"name": "切换发送模式", "desc": "临时切换当前会话的发送方式 [卡片 / 语音 / 文件 / 默认]"}, {"name": "切换网易云", "desc": "切换当前会话的音源为网易云"}, {"name": "切换酷我", "desc": "切换当前会话的音源为酷我"}, {"name": "切换酷狗", "desc": "切换当前会话的音源为酷狗"}, {"name": "搜歌", "desc": "搜索歌曲（搜歌 xxx 格式） Args: event: 消息事件"}, {"name": "点歌指令", "desc": "-"}, {"name": "网易点歌", "desc": "网易云点歌"}, {"name": "腾讯点歌", "desc": "QQ 音乐点歌"}, {"name": "酷我点歌", "desc": "酷我点歌"}, {"name": "酷狗点歌", "desc": "酷狗点歌"}] },
+  { id: 31, name: 'fishing', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "使用鱼饵", "desc": "使用鱼饵"}, {"name": "全部卖出", "desc": "卖出所有鱼获得金币"}, {"name": "卖鱼", "desc": "卖出鱼获得金币"}, {"name": "天气", "desc": "查看钓鱼天气"}, {"name": "我的鱼饵", "desc": "查看我的鱼饵"}, {"name": "自动钓鱼", "desc": "开启 / 关闭自动钓鱼"}, {"name": "购买鱼饵", "desc": "购买鱼饵"}, {"name": "钓鱼", "desc": "开始钓鱼"}, {"name": "钓鱼帮助", "desc": "显示钓鱼帮助信息"}, {"name": "钓鱼签到", "desc": "每日钓鱼签到"}, {"name": "鱼塘", "desc": "查看自己的鱼塘"}, {"name": "鱼类图鉴", "desc": "查看鱼类图鉴"}, {"name": "鱼饵商城", "desc": "查看鱼饵商城"}] },
+  { id: 32, name: '话痨王排行榜', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "今日壁画王", "desc": "-"}, {"name": "昨日壁画王", "desc": "-"}] },
+  { id: 33, name: '今日老婆', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "debug_graph", "desc": "调试关系图渲染"}, {"name": "rbq 排行", "desc": "-"}, {"name": "今日老婆", "desc": "-"}, {"name": "关系图", "desc": "-"}, {"name": "强娶", "desc": "强娶 + @要娶的那个人"}, {"name": "我的老婆", "desc": "-"}, {"name": "抽老婆帮助", "desc": "-"}, {"name": "求婚", "desc": "-"}, {"name": "重置强娶时间", "desc": "-"}, {"name": "重置记录", "desc": "-"}] },
+  { id: 34, name: '今日小猪', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "今日小猪", "desc": "抽取今日小猪"}] },
+  { id: 35, name: '今日新闻', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "今日新闻", "desc": "新闻查询指令，使用格式：/ 今日新闻"}] },
+  { id: 36, name: '来看漫画', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "copymanga_chapter_mode", "desc": "直接切换章节阅读模式（支持别名） Args: mode: 阅读模式，可选值：single（单页发送）、merge（合并转发整章内容），不提供则查看当前模式"}, {"name": "copymanga_config", "desc": "直接查看或修改 CopyManga 插件配置"}, {"name": "copymanga_help", "desc": "处理 help 命令，返回精简命令列表和使用流程"}, {"name": "copymanga_jump", "desc": "直接跳转到指定页码（支持别名） Args: page: 要跳转到的页码"}, {"name": "copymanga_next", "desc": "直接下一页（支持别名）"}, {"name": "copymanga_next_page", "desc": "直接搜索结果下一页（支持别名）"}, {"name": "copymanga_prev", "desc": "直接上一页（支持别名）"}, {"name": "copymanga_prev_page", "desc": "直接搜索结果上一页（支持别名）"}, {"name": "copymanga_profile", "desc": "直接获取当前登录用户信息"}, {"name": "copymanga_search", "desc": "直接搜索 CopyManga 漫画（支持别名） Args: keyword: 搜索关键词 page: 页码，默认 1"}, {"name": "copymanga_select_chapter", "desc": "直接选择章节阅读（支持别名） Args: chapter_index: 章节序号（从 1 开始） forward_all: 是否合并转发整章内容，默认使用配置项 chapter_content_mode"}, {"name": "copymanga_select_comic", "desc": "直接选择搜索结果中的漫画（支持别名） Args: comic_index: 漫画序号（从 1 开始） group_path_word: 分组路径标识，默认 default"}, {"name": "copymanga_test_api", "desc": "直接测试 API 域名连接（支持别名） Args: api_domain: 要测试的 API 域名，不提供则测试当前配置的域名"}] },
+  { id: 37, name: '狼人杀游戏', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "不操作", "desc": "女巫选择不操作"}, {"name": "创建房间", "desc": "创建游戏房间"}, {"name": "办掉", "desc": "狼人夜晚办掉目标"}, {"name": "加人", "desc": "加入游戏（别名）"}, {"name": "加人房间", "desc": "加入游戏（别名）"}, {"name": "加入", "desc": "加入游戏（别名）"}, {"name": "加入房间", "desc": "加入游戏"}, {"name": "发言完毕", "desc": "当前发言者发言完毕"}, {"name": "密谋", "desc": "狼人队友之间交流（私聊）"}, {"name": "开始投票", "desc": "跳过发言直接进入投票阶段（房主专用）"}, {"name": "开始游戏", "desc": "开始游戏（房主专用）"}, {"name": "开枪", "desc": "猎人开枪（私聊）"}, {"name": "投票", "desc": "白天投票放逐"}, {"name": "救人", "desc": "女巫使用解药救人"}, {"name": "查角色", "desc": "查看自己的角色（私聊）"}, {"name": "毒人", "desc": "女巫使用毒药毒人"}, {"name": "游戏状态", "desc": "查看游戏状态"}, {"name": "狼人杀帮助", "desc": "显示帮助信息"}, {"name": "结束游戏", "desc": "强制结束游戏（房主专用）"}, {"name": "踢出 AI", "desc": "踢出 AI 玩家（管理员专用）"}, {"name": "遗言完毕", "desc": "被杀玩家遗言完毕"}, {"name": "验人", "desc": "预言家夜晚验人"}] },
+  { id: 38, name: '浏览器插件', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "上一页", "desc": "跳转上一页"}, {"name": "下一页", "desc": "跳转下一页"}, {"name": "关闭标签页", "desc": "关闭标签页 <序号 1 序号 2>"}, {"name": "关闭浏览器", "desc": "关闭浏览器"}, {"name": "刻度", "desc": "刻度 开 / 关，决定截图是否附加刻度"}, {"name": "取消收藏", "desc": "取消收藏 <名称>"}, {"name": "安装浏览器", "desc": "安装 Playwright 浏览器依赖"}, {"name": "对话", "desc": "向当前网页输入并发送对话内容，如 / 对话 你好"}, {"name": "当前页面", "desc": "查看当前标签页的内容"}, {"name": "收藏", "desc": "收藏 <名称> < 网址 >"}, {"name": "收藏夹", "desc": "查看收藏夹列表"}, {"name": "整页", "desc": "查看当前标签页的全部内容"}, {"name": "标签页", "desc": "标签页 <序号 | None>, 切换 / 查看标签页"}, {"name": "滑动", "desc": "模拟滑动，如 / 滑动 100 200 300 400"}, {"name": "滚动", "desc": "滚动网页，如 / 滚动 上 100"}, {"name": "点击", "desc": "模拟点击指定坐标，如 / 点击 200 300"}, {"name": "缩放", "desc": "缩放网页，如 / 缩放 1.5"}, {"name": "访问", "desc": "访问指定链接，如 / 访问 链接"}, {"name": "输入", "desc": "模拟输入文本，如 / 输入 文本 回车"}] },
+  { id: 39, name: '洛克王国 Wiki 查询', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "洛克管理", "desc": "管理员命令（通过 AstrBot 权限系统控制） 用法: / 洛克管理 <command> 可用命令: - update: 更新数据库（从 Wiki 爬取最新数据） - status: 查看数据库状态 - tag-colors: 为无颜色的家具 / 道具识别颜色（大模型视觉识别） - tag-pet-colors: 为无颜色的宠物 / 精灵蛋识别颜色（大模型视觉识别） - force-tag-colors: 强制重新识别所有家具 / 道具颜色（覆盖已有颜色） - force-tag-pet-colors: 强制重新识别所有宠物 / 精灵蛋颜色（覆盖已有颜色） - fix-missing: 补全缺失的宠物数据"}] },
+  { id: 40, name: '洛克王国数据查询', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "取消订阅家园", "desc": "取消家园菜园或灵感订阅"}, {"name": "取消订阅洛克公告", "desc": "取消洛克王国新公告提醒"}, {"name": "取消订阅远行商人", "desc": "取消远行商人商品提醒"}, {"name": "查看阵容", "desc": "查看阵容详情"}, {"name": "洛克", "desc": "洛克王国帮助菜单"}, {"name": "洛克 QQ 登录", "desc": "QQ 扫码登录"}, {"name": "洛克 wiki", "desc": "查询精灵 wiki"}, {"name": "洛克交换大厅", "desc": "查看交换大厅"}, {"name": "洛克公告", "desc": "查询洛克王国公告列表"}, {"name": "洛克公告最新", "desc": "查询最新洛克王国公告"}, {"name": "洛克公告详情", "desc": "查询洛克王国公告详情"}, {"name": "洛克切换", "desc": "切换活跃主账号"}, {"name": "洛克删除无效绑定", "desc": "删除所有人的无效绑定（需要 bot 管理员权限）"}, {"name": "洛克刷新", "desc": "刷新当前主账号凭证（非必要不要使用）"}, {"name": "洛克刷新所有凭证", "desc": "刷新所有用户的凭证（需要 bot 管理员权限，同时非必要不要使用）"}, {"name": "洛克商店", "desc": "通过 ingame 接口查询商店信息"}, {"name": "洛克好友关系", "desc": "查询好友关系"}, {"name": "洛克学生", "desc": "查询学生认证状态与学生活动福利"}, {"name": "洛克家园", "desc": "通过 UID 查询洛克家园菜园、守卫精灵与室内精灵"}, {"name": "洛克导入", "desc": "导入 WeGame 凭证"}, {"name": "洛克微信登录", "desc": "微信扫码登录"}, {"name": "洛克战绩", "desc": "查看对战战绩"}, {"name": "洛克技能", "desc": "查询技能 wiki"}, {"name": "洛克查蛋", "desc": "查询精灵蛋组（支持名称 / 身高 / 体重反查）"}, {"name": "洛克档案", "desc": "查看个人档案"}, {"name": "洛克玩家", "desc": "通过 ingame 接口搜索玩家"}, {"name": "洛克绑定列表", "desc": "查看已绑定账号列表"}, {"name": "洛克背包", "desc": "查看个人洛克王国精灵背包"}, {"name": "洛克解绑", "desc": "解绑并在本地移除账号"}, {"name": "洛克配种", "desc": "配种查询：双参数判断兼容性，单参数查询如何孵出目标精灵"}, {"name": "洛克阵容", "desc": "查看阵容推荐"}, {"name": "订阅家园灵感", "desc": "订阅家园精灵灵感完成提醒"}, {"name": "订阅家园菜园", "desc": "订阅家园菜园成熟提醒"}, {"name": "订阅洛克公告", "desc": "订阅洛克王国新公告提醒"}, {"name": "订阅远行商人", "desc": "订阅远行商人商品提醒"}, {"name": "远行商人", "desc": "查询远行商人"}] },
+  { id: 41, name: 'manbo-tts', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "manbo", "desc": "这是一个文本转语音（TTS）指令"}, {"name": "manbo-list", "desc": "列出所有缓存的音频文件及其对应的文本"}] },
+  { id: 42, name: '全能视频直链提取器', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "download", "desc": "-"}, {"name": "video", "desc": "-"}, {"name": "直链", "desc": "提取视频直链，不下载"}] },
+  { id: 43, name: 'tarot', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "关闭群聊转发", "desc": "-"}, {"name": "占卜", "desc": "-"}, {"name": "塔罗牌", "desc": "-"}, {"name": "开启群聊转发", "desc": "-"}] },
+  { id: 44, name: '通用生图', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "生图", "desc": "处理生图指令。"}, {"name": "生图任务", "desc": "查看生图任务列表或指定任务详情。"}, {"name": "生图取消", "desc": "取消指定生图任务。"}, {"name": "生图模型", "desc": "切换生图模型。"}, {"name": "预设", "desc": "管理生图预设。"}] },
+  { id: 45, name: '头像值多少', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "头像估值", "desc": "头像估值指令。支持 @某人、输入 QQ 号或直接发送。"}] },
+  { id: 46, name: 'treasure_bag_plugin', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "bdrate_beauty", "desc": "发送人像图片获取百度的颜值评分。"}, {"name": "beauty_img", "desc": "获取一张随机美女图片。"}, {"name": "handwrite", "desc": "生成手写样式的图片。"}, {"name": "hitokoto", "desc": "获取一条一言。"}, {"name": "kog_info", "desc": "查询王者荣耀英雄资料。"}, {"name": "sad-word", "desc": "获取一条伤感语录。"}, {"name": "treasurebag-help", "desc": "显示插件帮助信息。"}, {"name": "weather", "desc": "查询天气。"}, {"name": "今日运势", "desc": "查询星座运势。"}] },
+  { id: 47, name: '王者荣耀数据查询', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "关闭战绩推送", "desc": "关闭战绩推送"}, {"name": "开启战绩推送", "desc": "开启战绩推送"}, {"name": "我的 ID", "desc": "查看已绑定的营地 ID"}, {"name": "战绩推送状态", "desc": "查看战绩推送状态"}, {"name": "清除角色选择", "desc": "清除角色选择，恢复默认"}, {"name": "王者主页", "desc": "查看王者主页"}, {"name": "王者帮助", "desc": "显示帮助信息"}, {"name": "王者角色列表", "desc": "查看可用的王者角色列表"}] },
+  { id: 48, name: '网页分析插件', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "group_blacklist", "desc": "管理群聊黑名单"}, {"name": "test_merge", "desc": "测试合并转发功能"}, {"name": "web_browser", "desc": "管理插件自动安装的 Playwright 浏览器 支持查看浏览器状态、卸载浏览器等操作。"}, {"name": "web_cache", "desc": "管理插件的网页分析结果缓存"}, {"name": "web_config", "desc": "显示当前插件的详细配置信息"}, {"name": "web_export", "desc": "导出网页分析结果"}, {"name": "web_help", "desc": "显示插件的所有可用命令和帮助信息"}, {"name": "web_mode", "desc": "管理插件的网页分析模式"}, {"name": "网页分析", "desc": "手动触发网页分析命令"}] },
+  { id: 49, name: '小黑盒游戏截图', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "xiaoheihe", "desc": "搜索小黑盒游戏并截图"}] },
+  { id: 50, name: '星露谷维基查询', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "wiki", "desc": "-"}] },
+  { id: 51, name: '星洛智萌_群友眷属', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "gm_admin", "desc": "管理员控制台指令。"}, {"name": "娶群友", "desc": "娶一位群友作为老婆 / 老公。指令状态控制与耗时操作分离以确保吞吐量。"}] },
+  { id: 52, name: '智能贴表情', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "贴表情", "desc": "贴表情 <数量>"}] },
+  { id: 53, name: '终末地协议终端', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "zmd", "desc": "显示终末地插件帮助菜单"}, {"name": "便签", "desc": "查询角色便签"}, {"name": "全服统计", "desc": "全服抽卡统计"}, {"name": "公告", "desc": "获取公告列表 或 指定公告详情"}, {"name": "公告最新", "desc": "获取最新一条公告详情"}, {"name": "切换绑定", "desc": "切换当前使用的账号"}, {"name": "删除绑定", "desc": "删除指定绑定账号"}, {"name": "取消订阅公告", "desc": "取消订阅公告推送"}, {"name": "取消订阅理智", "desc": "取消理智推送"}, {"name": "取消订阅调度券", "desc": "取消调度券推送"}, {"name": "同步面板", "desc": "同步干员面板数据（用于获取攻击力等战斗属性）"}, {"name": "国际服登录", "desc": "国际服账号密码登录 (skport)"}, {"name": "地区建设", "desc": "查询地区建设信息"}, {"name": "帝江号建设", "desc": "查询帝江号建设信息"}, {"name": "干员列表", "desc": "查询干员列表"}, {"name": "成就列表", "desc": "查询全部成就徽章并生成单独面板"}, {"name": "手机绑定", "desc": "手机号验证码登录"}, {"name": "扫码绑定", "desc": "扫码快捷登录"}, {"name": "抽卡分析", "desc": "生成抽卡分析图"}, {"name": "抽卡分析同步", "desc": "同步抽卡记录并分析"}, {"name": "抽卡记录", "desc": "查询抽卡记录"}, {"name": "授权登陆", "desc": "网页授权登录"}, {"name": "日历", "desc": "活动日历图"}, {"name": "理智", "desc": "查询理智状态"}, {"name": "签到", "desc": "每日签到"}, {"name": "绑定列表", "desc": "查看已绑定账号"}, {"name": "订阅公告", "desc": "订阅公告推送（仅限群聊）"}, {"name": "订阅理智", "desc": "订阅理智推送（满时提醒，覆盖旧订阅）"}, {"name": "订阅调度券", "desc": "订阅调度券满值提醒"}] },
+  { id: 54, name: '专业戳一戳', brief: '待补充简介内容', tags: ['插件'], hasTable: true, commands: [{"name": "戳", "desc": "戳 @某人 / 我 / 全体成员"}] }
 ];
 
 const COLS = 8;
@@ -235,7 +243,10 @@ function filterItems(query) {
   return memeItems.filter(m => m.display.toLowerCase().includes(q));
 }
 
+let currentPlugin = null;
+
 function openPlugin(p) {
+  currentPlugin = p;
   grid.style.display = 'none';
   pluginView.classList.add('active');
   document.getElementById('pvName').textContent = p.name;
@@ -243,7 +254,27 @@ function openPlugin(p) {
   const tagsHtml = p.tags.map(t => `<span class="tag${t==='搞笑'?' funny':''}">${t}</span>`).join('');
   document.getElementById('pvTags').innerHTML = tagsHtml;
   searchInput.value = '';
-  renderTable(memeItems);
+  if (p.commands) {
+    memeTable.className = 'cmd-table';
+    renderCmdTable(p.commands);
+  } else {
+    memeTable.className = 'meme-table';
+    renderTable(memeItems);
+  }
+}
+
+function renderCmdTable(items, query) {
+  if (!items) items = currentPlugin ? currentPlugin.commands : [];
+  let filtered = items;
+  if (query !== undefined) {
+    const q = query.toLowerCase();
+    filtered = items.filter(c => c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q));
+  }
+  const rows = filtered.map(c =>
+    `<tr><td class="cmd-name">${c.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td><td class="cmd-desc">${c.desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td></tr>`
+  );
+  tableBody.innerHTML = rows.join('');
+  countInfo.textContent = `共 ${filtered.length} 条指令`;
 }
 
 function openOverlay(p) {
@@ -314,6 +345,8 @@ grid.addEventListener('click', e => {
 document.getElementById('pluginBack').addEventListener('click', () => {
   grid.style.display = '';
   pluginView.classList.remove('active');
+  currentPlugin = null;
+  memeTable.className = 'meme-table';
   clearHover();
 });
 
@@ -323,7 +356,13 @@ document.getElementById('ovBackBtn').addEventListener('click', () => overlay.cla
 imgOverlay.addEventListener('click', e => { if (e.target === imgOverlay) closeImg(); });
 document.getElementById('imgClose').addEventListener('click', closeImg);
 
-searchInput.addEventListener('input', () => renderTable(filterItems(searchInput.value)));
+searchInput.addEventListener('input', () => {
+  if (currentPlugin && currentPlugin.commands) {
+    renderCmdTable(currentPlugin.commands, searchInput.value);
+  } else {
+    renderTable(filterItems(searchInput.value));
+  }
+});
 
 tableBody.addEventListener('click', e => {
   const td = e.target.closest('td');
