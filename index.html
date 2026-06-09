@@ -31,9 +31,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .plugin-top .plugin-tags .tag { display: inline-block; background: #ede9fe; color: #7c3aed; font-size: 11px; padding: 3px 10px; border-radius: 10px; }
 .plugin-top .plugin-tags .tag.funny { background: #fef3c7; color: #d97706; }
 
-.search-bar { margin-bottom: 12px; }
+.search-bar { margin-bottom: 12px; display: none; }
+.search-bar.visible { display: block; }
 .search-bar input { width: 100%; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 14px; outline: none; background: #fff; }
 .search-bar input:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,.1); }
+
+.top-search { max-width: 800px; margin: 0 auto 0; padding: 20px 24px; }
+.top-search input { width: 100%; padding: 14px 20px; border: 2px solid #e0e0e0; border-radius: 12px; font-size: 15px; outline: none; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: all .2s; }
+.top-search input:focus { border-color: #667eea; box-shadow: 0 4px 16px rgba(102,126,234,.15); }
 .count-info { font-size: 12px; color: #999; margin-bottom: 8px; }
 
 .meme-table { width: 100%; border-collapse: collapse; font-size: 12px; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e8e8e8; table-layout: fixed; }
@@ -98,6 +103,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
   <p>共 55 个插件 · 点击卡片查看详情</p>
 </div>
 
+<div class="top-search"><input type="text" id="topSearchInput" placeholder="搜索插件 — 输入名称或简介关键词..."></div>
 <div class="grid" id="grid"></div>
 
 <div class="plugin-view" id="pluginView">
@@ -204,6 +210,7 @@ const pluginView = document.getElementById('pluginView');
 const overlay = document.getElementById('overlay');
 const tableBody = document.getElementById('tableBody');
 const searchInput = document.getElementById('searchInput');
+const topSearchInput = document.getElementById('topSearchInput');
 const countInfo = document.getElementById('countInfo');
 const imgOverlay = document.getElementById('imgOverlay');
 const imgPreview = document.getElementById('imgPreview');
@@ -254,11 +261,14 @@ function openPlugin(p) {
   currentPlugin = p;
   grid.style.display = 'none';
   pluginView.classList.add('active');
+  topSearchInput.parentElement.style.display = 'none';
   document.getElementById('pvName').textContent = p.name;
   document.getElementById('pvBrief').textContent = p.brief;
   const tagsHtml = p.tags.map(t => `<span class="tag${t==='搞笑'?' funny':''}">${t}</span>`).join('');
   document.getElementById('pvTags').innerHTML = tagsHtml;
   searchInput.value = '';
+  const searchBar = document.querySelector('.search-bar');
+  searchBar.classList.toggle('visible', !p.commands && p.hasTable);
   if (p.commands) {
     memeTable.className = 'cmd-table';
     renderCmdTable(p.commands);
@@ -354,6 +364,8 @@ document.getElementById('pluginBack').addEventListener('click', () => {
   memeTable.className = 'meme-table';
   clearHover();
   searchInput.value = '';
+  topSearchInput.value = '';
+  topSearchInput.parentElement.style.display = '';
   filterCards('');
 });
 
@@ -373,13 +385,16 @@ function filterCards(query) {
   });
 }
 
+topSearchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => filterCards(topSearchInput.value), 200);
+});
+
 searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
     if (currentPlugin && currentPlugin.commands) {
       renderCmdTable(currentPlugin.commands, searchInput.value);
-    } else if (!pluginView.classList.contains('active')) {
-      filterCards(searchInput.value);
     } else {
       renderTable(filterItems(searchInput.value));
     }
