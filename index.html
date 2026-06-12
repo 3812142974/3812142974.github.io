@@ -399,7 +399,19 @@ function filterCards(query) {
   document.querySelectorAll('.card').forEach(card => {
     const name = card.querySelector('.name').textContent.toLowerCase();
     const brief = card.querySelector('.brief').textContent.toLowerCase();
-    card.style.display = (name.includes(q) || brief.includes(q)) ? '' : 'none';
+    let match = name.includes(q) || brief.includes(q);
+    if (!match) {
+      const pid = parseInt(card.dataset.id);
+      const plugin = plugins.find(p => p.id === pid);
+      if (plugin) {
+        if (plugin.commands) {
+          match = plugin.commands.some(c => c.name.toLowerCase().includes(q));
+        } else if (pid === 1 && typeof memeItems !== 'undefined') {
+          match = memeItems.some(m => m.display.toLowerCase().includes(q));
+        }
+      }
+    }
+    card.style.display = match ? '' : 'none';
   });
 }
 
