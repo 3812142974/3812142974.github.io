@@ -15,6 +15,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
 .card .name { font-size: 14px; font-weight: 700; color: #333; margin-bottom: 6px; word-break: break-word; overflow-wrap: break-word; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .card .brief { font-size: 12px; color: #999; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.card .cmd-source { display: block; font-size: 11px; color: #b0b0b0; margin-top: 8px; }
 .card .tags { margin-top: 10px; display: flex; gap: 4px; flex-wrap: wrap; }
 .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; }
 .tag.AI { background: hsl(0, 55%, 86%); color: hsl(0, 60%, 30%); }
@@ -394,25 +395,65 @@ imgOverlay.addEventListener('click', e => { if (e.target === imgOverlay) closeIm
 document.getElementById('imgClose').addEventListener('click', closeImg);
 
 let searchTimer = null;
+function searchCommands(query) {
+  const q = query.toLowerCase();
+  if (!q) { renderCards(); return; }
+
+  // collect matching commands from all plugins
+  const results = [];
+  plugins.forEach(p => {
+    if (p.commands) {
+      p.commands.forEach(c => {
+        if (c.name.toLowerCase().includes(q) || (c.desc && c.desc.toLowerCase().includes(q))) {
+          results.push({ type: 'cmd', pluginName: p.name, pluginId: p.id, name: c.name, desc: c.desc || '' });
+        }
+      });
+    }
+    // 表情包生成器 memeItems
+    if (p.id === 1 && typeof memeItems !== 'undefined') {
+      memeItems.forEach(m => {
+        if (m.display.toLowerCase().includes(q)) {
+          results.push({ type: 'meme', pluginName: p.name, pluginId: p.id, name: m.display.split(',')[0], file: m.file });
+        }
+      });
+    }
+  });
+
+  if (results.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#999;padding:40px">没有找到匹配的指令</div>';
+    return;
+  }
+
+  grid.innerHTML = results.map(r => {
+    const source = `<span class="cmd-source">${r.pluginName}</span>`;
+    if (r.type === 'meme') {
+      return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${r.name}">
+        <div class="name">${r.name}</div>
+        <div class="brief">表情包指令</div>
+        ${source}
+      </div>`;
+    }
+    return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${r.name}">
+      <div class="name">${r.name}</div>
+      <div class="brief">${r.desc || '无描述'}</div>
+      ${source}
+    </div>`;
+  }).join('');
+
+  // click on command card opens the plugin
+  document.querySelectorAll('.cmd-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const pid = parseInt(card.dataset.pid);
+      const plugin = plugins.find(p => p.id === pid);
+      if (plugin) openPlugin(plugin);
+    });
+  });
+}
+
 function filterCards(query) {
   const q = query.toLowerCase();
-  document.querySelectorAll('.card').forEach(card => {
-    const name = card.querySelector('.name').textContent.toLowerCase();
-    const brief = card.querySelector('.brief').textContent.toLowerCase();
-    let match = name.includes(q) || brief.includes(q);
-    if (!match) {
-      const pid = parseInt(card.dataset.id);
-      const plugin = plugins.find(p => p.id === pid);
-      if (plugin) {
-        if (plugin.commands) {
-          match = plugin.commands.some(c => c.name.toLowerCase().includes(q));
-        } else if (pid === 1 && typeof memeItems !== 'undefined') {
-          match = memeItems.some(m => m.display.toLowerCase().includes(q));
-        }
-      }
-    }
-    card.style.display = match ? '' : 'none';
-  });
+  if (!q) { renderCards(); return; }
+  searchCommands(q);
 }
 
 topSearchInput.addEventListener('input', () => {
