@@ -328,9 +328,10 @@ function renderCmdTable(items, query) {
     const q = query.toLowerCase();
     filtered = items.filter(c => c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q));
   }
-  const rows = filtered.map(c =>
-    `<tr><td class="cmd-name">${c.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td><td class="cmd-desc">${c.desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</td></tr>`
-  );
+  const rows = filtered.map(c => {
+    const esc = (s) => (s||'').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    return `<tr data-cmd="${esc(c.name)}"><td class="cmd-name">${esc(c.name)}</td><td class="cmd-desc">${esc(c.desc)}</td></tr>`;
+  });
   tableBody.innerHTML = rows.join('');
   countInfo.textContent = `共 ${filtered.length} 条指令`;
 }
