@@ -145,6 +145,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 }
 tr.highlight-row, td.highlight-cell { animation: highlightFade 2s ease-out; }
 @keyframes highlightFade { 0% { background: #fff3cd; box-shadow: inset 0 0 0 2px #ffc107; } 100% { background: transparent; box-shadow: inset 0 0 0 2px transparent; } }
+#backToTop { position: fixed; right: 24px; bottom: 24px; width: 44px; height: 44px; border-radius: 50%; background: #667eea; color: #fff; border: none; cursor: pointer; font-size: 20px; box-shadow: 0 4px 12px rgba(102,126,234,.4); opacity: 0; visibility: hidden; transform: translateY(10px); transition: all .3s; z-index: 999; display: flex; align-items: center; justify-content: center; }
+#backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+#backToTop:hover { background: #5a6fd6; transform: translateY(-2px); }
+@media (max-width: 768px) { .header { padding: 20px 12px; } .header h1 { font-size: 20px; } .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 12px; } .card { padding: 14px 10px; } .card .name { font-size: 13px; } .top-search { padding: 12px 12px; } .top-search input { padding: 10px 14px; font-size: 14px; } .qq-link-area { padding: 0 12px 8px; gap: 8px; } .qq-link { padding: 6px 14px; font-size: 12px; } .meme-table { font-size: 11px; } .plugin-view { padding: 12px; } .plugin-top { flex-direction: column; gap: 8px; } #backToTop { right: 12px; bottom: 12px; width: 38px; height: 38px; font-size: 16px; } }
+@media (max-width: 480px) { .header h1 { font-size: 18px; } .header p { font-size: 12px; } .grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; } .card { padding: 12px 8px; border-radius: 8px; } .card .name { font-size: 12px; } .card .brief { font-size: 11px; } .top-search { padding: 8px 8px; } .top-search input { padding: 10px 12px; font-size: 13px; border-radius: 8px; } .qq-link-area { flex-direction: column; align-items: center; } .qq-link { width: 100%; max-width: 280px; justify-content: center; } .meme-table th, .meme-table td { padding: 6px 4px; font-size: 10px; } .cmd-table td.cmd-name { width: 80px; } }
 </style>
 </head>
 <body>
@@ -433,17 +438,18 @@ function searchCommands(query) {
   }
 
   grid.innerHTML = results.map(r => {
-    const source = `<span class="cmd-source">${r.pluginName}</span>`;
+    const esc = (s) => (s||'').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const source = `<span class="cmd-source">${esc(r.pluginName)}</span>`;
     if (r.type === 'meme') {
-      return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${r.name}" data-meme-file="${r.file || ''}">
-        <div class="name">${r.name}</div>
+      return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${esc(r.name)}" data-meme-file="${esc(r.file || '')}">
+        <div class="name">${esc(r.name)}</div>
         <div class="brief">表情包指令</div>
         ${source}
       </div>`;
     }
-    return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${r.name}">
-      <div class="name">${r.name}</div>
-      <div class="brief">${r.desc || '无描述'}</div>
+    return `<div class="card cmd-card" data-pid="${r.pluginId}" data-cmd="${esc(r.name)}">
+      <div class="name">${esc(r.name)}</div>
+      <div class="brief">${esc(r.desc || '无描述')}</div>
       ${source}
     </div>`;
   }).join('');
@@ -461,10 +467,10 @@ function searchCommands(query) {
         let isMeme = false;
         if (pid === 1 && card.dataset.memeFile) {
           isMeme = true;
-          const td = tableBody.querySelector(`td[data-file="${card.dataset.memeFile}"]`);
+          const td = tableBody.querySelector(`td[data-file="${CSS.escape(card.dataset.memeFile)}"]`);
           targetRow = td;
         } else {
-          targetRow = tableBody.querySelector(`tr[data-cmd="${cmd}"]`);
+          targetRow = tableBody.querySelector(`tr[data-cmd="${CSS.escape(cmd)}"]`);
         }
         if (targetRow) {
           targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -505,6 +511,12 @@ tableBody.addEventListener('click', e => {
   td.classList.add('active');
   showImg(td.dataset.file);
 });
+</script>
+<button id="backToTop" title="回到顶部">&#9650;</button>
+<script>
+const backToTop = document.getElementById('backToTop');
+window.addEventListener('scroll', () => { backToTop.classList.toggle('show', window.scrollY > 400); });
+backToTop.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
 </script>
 </body>
 </html>
