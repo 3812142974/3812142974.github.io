@@ -97,6 +97,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .qq-link-area { max-width: 800px; margin: 0 auto; padding: 0 24px 12px; text-align: center; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .qq-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; background: linear-gradient(135deg, #12B7F5, #0D9FE0); color: #fff; border-radius: 22px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all .25s; box-shadow: 0 2px 8px rgba(18,183,245,.25); }
 .qq-link:hover { background: linear-gradient(135deg, #0ea8e6, #0a8ec9); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(18,183,245,.4); }
+.sponsor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 20px; background: linear-gradient(135deg, #f5a623, #f76b1c); color: #fff; border-radius: 22px; text-decoration: none; font-size: 14px; font-weight: 500; transition: all .25s; box-shadow: 0 2px 8px rgba(245,166,35,.25); border: none; cursor: pointer; font-family: inherit; }
+.sponsor-btn:hover { background: linear-gradient(135deg, #e8961a, #e55a0f); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(245,166,35,.4); }
+.sponsor-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); z-index: 300; display: none; justify-content: center; align-items: center; }
+.sponsor-overlay.active { display: flex; }
+.sponsor-modal { background: #fff; border-radius: 16px; padding: 28px 24px; width: 360px; max-width: 90vw; animation: popIn .25s ease; position: relative; }
+.sponsor-modal .sp-close { position: absolute; top: 12px; right: 16px; font-size: 24px; color: #999; cursor: pointer; border: none; background: none; line-height: 1; }
+.sponsor-modal .sp-close:hover { color: #333; }
+.sponsor-modal .sp-title { font-size: 20px; font-weight: 700; color: #1a1a2e; text-align: center; margin-bottom: 20px; }
+.sponsor-modal .sp-label { font-size: 13px; color: #666; margin-bottom: 8px; }
+.sponsor-modal .sp-input { width: 100%; padding: 10px 14px; border: 1px solid #e0e0e0; border-radius: 10px; font-size: 15px; outline: none; margin-bottom: 20px; transition: border .2s; }
+.sponsor-modal .sp-input:focus { border-color: #667eea; box-shadow: 0 0 0 3px rgba(102,126,234,.1); }
+.sponsor-modal .sp-payment-options { display: flex; gap: 10px; margin-bottom: 24px; }
+.sponsor-modal .sp-payment-option { flex: 1; padding: 12px 8px; border: 2px solid #e8e8e8; border-radius: 12px; text-align: center; cursor: pointer; transition: all .2s; font-size: 13px; color: #555; background: #fafafa; }
+.sponsor-modal .sp-payment-option:hover { border-color: #c4b5fd; background: #f8f9ff; }
+.sponsor-modal .sp-payment-option.selected { border-color: #667eea; background: #ede9fe; color: #5a47c9; font-weight: 600; }
+.sponsor-modal .sp-next-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all .2s; background: #d0d0d0; color: #fff; }
+.sponsor-modal .sp-next-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
+.sponsor-modal .sp-next-btn.active:hover { box-shadow: 0 4px 16px rgba(102,126,234,.4); transform: translateY(-1px); }
 .qq-link .qq-img { width: 22px; height: 22px; flex-shrink: 0; }
 .count-info { font-size: 12px; color: #999; margin-bottom: 8px; }
 
@@ -159,7 +177,7 @@ tr.highlight-row, td.highlight-cell { animation: highlightFade 2s ease-out; }
 </div>
 
 <div class="top-search"><input type="text" id="topSearchInput" placeholder="搜索插件 — 输入名称或简介关键词..."></div>
-<div class="qq-link-area"><a class="qq-link" href="https://qm.qq.com/q/D5MWpYN0H0" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加主人</a><a class="qq-link" href="https://qm.qq.com/q/SicRU4NmI8" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加bot</a><a class="qq-link" href="https://qun.qq.com/qunpro/robot/qunshare?robot_appid=1904024429&robot_uin=4016157499" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加官方机器人</a></div>
+<div class="qq-link-area"><a class="qq-link" href="https://qm.qq.com/q/D5MWpYN0H0" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加主人</a><a class="qq-link" href="https://qm.qq.com/q/SicRU4NmI8" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加bot</a><a class="qq-link" href="https://qun.qq.com/qunpro/robot/qunshare?robot_appid=1904024429&robot_uin=4016157499" target="_blank" rel="noopener"><img src="qq.png" class="qq-img" alt="QQ">添加官方机器人</a><button class="sponsor-btn" id="sponsorBtn">赞助</button></div>
 <div class="grid" id="grid"></div>
 
 <div class="plugin-view" id="pluginView">
@@ -181,6 +199,22 @@ tr.highlight-row, td.highlight-cell { animation: highlightFade 2s ease-out; }
     <button class="close-btn" id="imgClose">&times;</button>
     <img id="imgPreview" src="" alt="">
     <div class="img-name" id="imgName"></div>
+  </div>
+</div>
+
+<div class="sponsor-overlay" id="sponsorOverlay">
+  <div class="sponsor-modal">
+    <button class="sp-close" id="spClose">&times;</button>
+    <div class="sp-title">赞助支持</div>
+    <div class="sp-label">赞助金额（元）</div>
+    <input type="number" class="sp-input" id="spAmount" placeholder="请输入金额" min="0.01" step="0.01">
+    <div class="sp-label">支付方式</div>
+    <div class="sp-payment-options">
+      <div class="sp-payment-option" data-type="wxpay">微信支付</div>
+      <div class="sp-payment-option" data-type="alipay">支付宝</div>
+      <div class="sp-payment-option" data-type="qqpay">QQ支付</div>
+    </div>
+    <button class="sp-next-btn" id="spNextBtn">下一步</button>
   </div>
 </div>
 
@@ -511,6 +545,147 @@ tableBody.addEventListener('click', e => {
   td.classList.add('active');
   showImg(td.dataset.file);
 });
+
+// ===== 赞助功能 =====
+function md5(str) {
+  function rotateLeft(v, n) { return (v << n) | (v >>> (32 - n)); }
+  function addUnsigned(x, y) { var lsw = (x & 0xFFFF) + (y & 0xFFFF), msw = (x >> 16) + (y >> 16) + (lsw >> 16); return (msw << 16) | (lsw & 0xFFFF); }
+  function F(x, y, z) { return (x & y) | (~x & z); }
+  function G(x, y, z) { return (x & z) | (y & ~z); }
+  function H(x, y, z) { return x ^ y ^ z; }
+  function I(x, y, z) { return y ^ (x | ~z); }
+  function ff(a, b, c, d, x, s, ac) { a = addUnsigned(a, addUnsigned(addUnsigned(F(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+  function gg(a, b, c, d, x, s, ac) { a = addUnsigned(a, addUnsigned(addUnsigned(G(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+  function hh(a, b, c, d, x, s, ac) { a = addUnsigned(a, addUnsigned(addUnsigned(H(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+  function ii(a, b, c, d, x, s, ac) { a = addUnsigned(a, addUnsigned(addUnsigned(I(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+  function toHex(v) { var h = ''; for (var i = 0; i < 4; i++) h += ('0' + ((v >> (i * 8)) & 0xFF).toString(16)).slice(-2); return h; }
+  var bytes = [];
+  for (var i = 0; i < str.length; i++) {
+    var c = str.charCodeAt(i);
+    if (c < 0x80) {
+      bytes.push(c);
+    } else if (c < 0x800) {
+      bytes.push(0xC0 | (c >> 6), 0x80 | (c & 0x3F));
+    } else if (c < 0xD800 || c >= 0xE000) {
+      bytes.push(0xE0 | (c >> 12), 0x80 | ((c >> 6) & 0x3F), 0x80 | (c & 0x3F));
+    } else {
+      i++;
+      c = 0x10000 + (((c & 0x3FF) << 10) | (str.charCodeAt(i) & 0x3FF));
+      bytes.push(0xF0 | (c >> 18), 0x80 | ((c >> 12) & 0x3F), 0x80 | ((c >> 6) & 0x3F), 0x80 | (c & 0x3F));
+    }
+  }
+  var len = bytes.length, bitLen = len * 8;
+  bytes.push(0x80); while ((bytes.length + 8) % 64 !== 0) bytes.push(0);
+  var lo = bitLen >>> 0, hi = (bitLen / 0x100000000) >>> 0;
+  bytes.push(lo & 0xFF, (lo >>> 8) & 0xFF, (lo >>> 16) & 0xFF, (lo >>> 24) & 0xFF);
+  bytes.push(hi & 0xFF, (hi >>> 8) & 0xFF, (hi >>> 16) & 0xFF, (hi >>> 24) & 0xFF);
+  var A = 0x67452301, B = 0xEFCDAB89, C = 0x98BADCFE, D = 0x10325476;
+  var S11 = 7, S12 = 12, S13 = 17, S14 = 22, S21 = 5, S22 = 9, S23 = 14, S24 = 20;
+  var S31 = 4, S32 = 11, S33 = 16, S34 = 23, S41 = 6, S42 = 10, S43 = 15, S44 = 21;
+  for (var k = 0; k < bytes.length; k += 64) {
+    var M = []; for (var j = 0; j < 16; j++) M[j] = bytes[k + j * 4] | (bytes[k + j * 4 + 1] << 8) | (bytes[k + j * 4 + 2] << 16) | (bytes[k + j * 4 + 3] << 24);
+    var a = A, b = B, c = C, d = D;
+    a = ff(a, b, c, d, M[0], S11, 0xD76AA478); d = ff(d, a, b, c, M[1], S12, 0xE8C7B756); c = ff(c, d, a, b, M[2], S13, 0x242070DB); b = ff(b, c, d, a, M[3], S14, 0xC1BDCEEE);
+    a = ff(a, b, c, d, M[4], S11, 0xF57C0FAF); d = ff(d, a, b, c, M[5], S12, 0x4787C62A); c = ff(c, d, a, b, M[6], S13, 0xA8304613); b = ff(b, c, d, a, M[7], S14, 0xFD469501);
+    a = ff(a, b, c, d, M[8], S11, 0x698098D8); d = ff(d, a, b, c, M[9], S12, 0x8B44F7AF); c = ff(c, d, a, b, M[10], S13, 0xFFFF5BB1); b = ff(b, c, d, a, M[11], S14, 0x895CD7BE);
+    a = ff(a, b, c, d, M[12], S11, 0x6B901122); d = ff(d, a, b, c, M[13], S12, 0xFD987193); c = ff(c, d, a, b, M[14], S13, 0xA679438E); b = ff(b, c, d, a, M[15], S14, 0x49B40821);
+    a = gg(a, b, c, d, M[1], S21, 0xF61E2562); d = gg(d, a, b, c, M[6], S22, 0xC040B340); c = gg(c, d, a, b, M[11], S23, 0x265E5A51); b = gg(b, c, d, a, M[0], S24, 0xE9B6C7AA);
+    a = gg(a, b, c, d, M[5], S21, 0xD62F105D); d = gg(d, a, b, c, M[10], S22, 0x2441453); c = gg(c, d, a, b, M[15], S23, 0xD8A1E681); b = gg(b, c, d, a, M[4], S24, 0xE7D3FBC8);
+    a = gg(a, b, c, d, M[9], S21, 0x21E1CDE6); d = gg(d, a, b, c, M[14], S22, 0xC33707D6); c = gg(c, d, a, b, M[3], S23, 0xF4D50D87); b = gg(b, c, d, a, M[8], S24, 0x455A14ED);
+    a = gg(a, b, c, d, M[13], S21, 0xA9E3E905); d = gg(d, a, b, c, M[2], S22, 0xFCEFA3F8); c = gg(c, d, a, b, M[7], S23, 0x676F02D9); b = gg(b, c, d, a, M[12], S24, 0x8D2A4C8A);
+    a = hh(a, b, c, d, M[5], S31, 0xFFFA3942); d = hh(d, a, b, c, M[8], S32, 0x8771F681); c = hh(c, d, a, b, M[11], S33, 0x6D9D6122); b = hh(b, c, d, a, M[14], S34, 0xFDE5380C);
+    a = hh(a, b, c, d, M[1], S31, 0xA4BEEA44); d = hh(d, a, b, c, M[4], S32, 0x4BDECFA9); c = hh(c, d, a, b, M[7], S33, 0xF6BB4B60); b = hh(b, c, d, a, M[10], S34, 0xBEBFBC70);
+    a = hh(a, b, c, d, M[13], S31, 0x289B7EC6); d = hh(d, a, b, c, M[0], S32, 0xEAA127FA); c = hh(c, d, a, b, M[3], S33, 0xD4EF3085); b = hh(b, c, d, a, M[6], S34, 0x4881D05);
+    a = hh(a, b, c, d, M[9], S31, 0xD9D4D039); d = hh(d, a, b, c, M[12], S32, 0xE6DB99E5); c = hh(c, d, a, b, M[15], S33, 0x1FA27CF8); b = hh(b, c, d, a, M[2], S34, 0xC4AC5665);
+    a = ii(a, b, c, d, M[0], S41, 0xF4292244); d = ii(d, a, b, c, M[7], S42, 0x432AFF97); c = ii(c, d, a, b, M[14], S43, 0xAB9423A7); b = ii(b, c, d, a, M[5], S44, 0xFC93A039);
+    a = ii(a, b, c, d, M[12], S41, 0x655B59C3); d = ii(d, a, b, c, M[3], S42, 0x8F0CCC92); c = ii(c, d, a, b, M[10], S43, 0xFFEFF47D); b = ii(b, c, d, a, M[1], S44, 0x85845DD1);
+    a = ii(a, b, c, d, M[8], S41, 0x6FA87E4F); d = ii(d, a, b, c, M[15], S42, 0xFE2CE6E0); c = ii(c, d, a, b, M[6], S43, 0xA3014314); b = ii(b, c, d, a, M[13], S44, 0x4E0811A1);
+    a = ii(a, b, c, d, M[4], S41, 0xF7537E82); d = ii(d, a, b, c, M[11], S42, 0xBD3AF235); c = ii(c, d, a, b, M[2], S43, 0x2AD7D2BB); b = ii(b, c, d, a, M[9], S44, 0xEB86D391);
+    A = addUnsigned(A, a); B = addUnsigned(B, b); C = addUnsigned(C, c); D = addUnsigned(D, d);
+  }
+  return (toHex(A) + toHex(B) + toHex(C) + toHex(D)).toLowerCase();
+}
+
+(function() {
+  var overlay = document.getElementById('sponsorOverlay');
+  var btn = document.getElementById('sponsorBtn');
+  var close = document.getElementById('spClose');
+  var amountInput = document.getElementById('spAmount');
+  var nextBtn = document.getElementById('spNextBtn');
+  var paymentOptions = document.querySelectorAll('.sp-payment-option');
+  var selectedType = null;
+
+  btn.addEventListener('click', function() { overlay.classList.add('active'); });
+  close.addEventListener('click', function() { overlay.classList.remove('active'); });
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('active'); });
+
+  paymentOptions.forEach(function(opt) {
+    opt.addEventListener('click', function() {
+      paymentOptions.forEach(function(o) { o.classList.remove('selected'); });
+      opt.classList.add('selected');
+      selectedType = opt.dataset.type;
+      updateNextBtn();
+    });
+  });
+
+  amountInput.addEventListener('input', updateNextBtn);
+
+  function updateNextBtn() {
+    var val = amountInput.value.trim();
+    var hasAmount = val !== '' && parseFloat(val) > 0;
+    if (hasAmount && selectedType) {
+      nextBtn.classList.add('active');
+      nextBtn.disabled = false;
+    } else {
+      nextBtn.classList.remove('active');
+      nextBtn.disabled = true;
+    }
+  }
+
+  nextBtn.addEventListener('click', function() {
+    if (!nextBtn.classList.contains('active')) return;
+    var money = amountInput.value.trim();
+    var type = selectedType;
+    var outTradeNo = 'SPONSOR_' + Date.now() + String(Math.floor(Math.random() * 900) + 100);
+
+    var params = {
+      pid: '377682',
+      type: type,
+      out_trade_no: outTradeNo,
+      notify_url: window.location.origin,
+      return_url: window.location.origin,
+      name: '赞助支持',
+      money: money,
+      sitename: '',
+      sign_type: 'MD5'
+    };
+
+    var signKeys = ['money', 'name', 'notify_url', 'out_trade_no', 'pid', 'return_url', 'sitename', 'type'];
+    var signStr = signKeys.filter(function(k) { return params[k] !== ''; }).map(function(k) { return k + '=' + params[k]; }).join('&');
+    signStr += 'a52abcb60ce34e686ead72d536b80555';
+    params.sign = md5(signStr);
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'https://pay.flwi.top/submit.php';
+    form.target = '_blank';
+    for (var key in params) {
+      var input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = params[key];
+      form.appendChild(input);
+    }
+    document.body.appendChild(form);
+    form.submit();
+    document.body.removeChild(form);
+    overlay.classList.remove('active');
+    amountInput.value = '';
+    selectedType = null;
+    paymentOptions.forEach(function(o) { o.classList.remove('selected'); });
+    updateNextBtn();
+  });
+})();
 </script>
 <button id="backToTop" title="回到顶部">&#9650;</button>
 <script>
