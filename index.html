@@ -337,6 +337,7 @@ function openPlugin(p) {
   currentPlugin = p;
   grid.style.display = 'none';
   pluginView.classList.add('active');
+  document.querySelector('.qq-link-area').style.display = 'none';
   topSearchInput.parentElement.style.display = 'none';
   document.getElementById('pvName').textContent = p.name;
   document.getElementById('pvBrief').textContent = p.brief;
@@ -429,6 +430,7 @@ grid.addEventListener('click', e => {
 document.getElementById('pluginBack').addEventListener('click', () => {
   grid.style.display = '';
   pluginView.classList.remove('active');
+  document.querySelector('.qq-link-area').style.display = '';
   currentPlugin = null;
   memeTable.className = 'meme-table';
   clearHover();
