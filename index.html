@@ -111,6 +111,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft Ya
 .sponsor-modal .sp-payment-options { display: flex; gap: 10px; margin-bottom: 24px; }
 .sponsor-modal .sp-payment-option { flex: 1; padding: 12px 8px; border: 2px solid #e8e8e8; border-radius: 12px; text-align: center; cursor: pointer; transition: all .2s; font-size: 13px; color: #555; background: #fafafa; }
 .sponsor-modal .sp-payment-option:hover { border-color: #c4b5fd; background: #f8f9ff; }
+.sponsor-modal .sp-payment-option.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
 .sponsor-modal .sp-payment-option.selected { border-color: #667eea; background: #ede9fe; color: #5a47c9; font-weight: 600; }
 .sponsor-modal .sp-next-btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all .2s; background: #d0d0d0; color: #fff; }
 .sponsor-modal .sp-next-btn.active { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
@@ -211,8 +212,8 @@ tr.highlight-row, td.highlight-cell { animation: highlightFade 2s ease-out; }
     <div class="sp-label">支付方式</div>
     <div class="sp-payment-options">
       <div class="sp-payment-option" data-type="wxpay">微信支付</div>
-      <div class="sp-payment-option" data-type="alipay">支付宝</div>
-      <div class="sp-payment-option" data-type="qqpay">QQ支付</div>
+      <div class="sp-payment-option disabled" data-type="alipay">支付宝</div>
+      <div class="sp-payment-option disabled" data-type="qqpay">QQ支付</div>
     </div>
     <button class="sp-next-btn" id="spNextBtn">下一步</button>
   </div>
